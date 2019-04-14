@@ -1,0 +1,10 @@
+<svg viewBox="0 0 130 130" preserveAspectRatio="none">
+  <rect
+    *ngFor="let item of stack"
+    x="0"
+    [attr.y]="item.y"
+    width="130"
+    [attr.height]="item.height"
+    [attr.fill]="item.color"
+  ></rect>
+</svg>
