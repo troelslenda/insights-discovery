@@ -1,2 +1,12 @@
 
-<app-insights-discovery [insightsDiscoveryCode]="27"></app-insights-discovery>
+<div>
+  <label for="code">Insights Discovery</label>
+  <div>
+      <input type="text" placeholder="Profile code" id="code" [formControl]="code">
+  </div>
+  <small>Enter an Insights discoery code to render SVG</small>
+
+</div>
+
+<app-insights-discovery *ngIf="!code.pristine" [insightsDiscoveryCode]="code.value"></app-insights-discovery>
+

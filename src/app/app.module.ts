@@ -4,6 +4,7 @@ import { NgModule, Injector } from '@angular/core';
 import { AppComponent } from './app.component';
 import { InsightsDiscoveryComponent } from './insights-discovery/insights-discovery.component';
 import { createCustomElement } from '@angular/elements';
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import { createCustomElement } from '@angular/elements';
     InsightsDiscoveryComponent
     ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule
   ],
   providers: [],

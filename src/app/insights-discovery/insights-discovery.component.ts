@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from "@angular/core";
+import { Component, OnInit, Input, OnChanges} from "@angular/core";
 import {baseLayer} from "./baseLayers";
 
 @Component({
@@ -6,15 +6,16 @@ import {baseLayer} from "./baseLayers";
   templateUrl: "./insights-discovery.component.html",
   styleUrls: ["./insights-discovery.component.scss"]
 })
-export class InsightsDiscoveryComponent implements OnInit {
+export class InsightsDiscoveryComponent implements OnChanges {
   @Input() insightsDiscoveryCode: number;
   stack: any[];
   totalheight = 0;
+  error;
 
   constructor() {  }
 
   orderOfColors(code: number): string[] {
-    return baseLayer[this.baseNumber(code)];
+    return Object.values(baseLayer[this.baseNumber(code)]);
   }
 
   private baseNumber(code: number): number {
@@ -39,20 +40,29 @@ export class InsightsDiscoveryComponent implements OnInit {
     if (code > 40 && code < 60) {
       return 3;
     }
+    throw new Error();
   }
 
   get ring(): number {
     return this.locateRing(this.insightsDiscoveryCode);
   }
 
-  ngOnInit() {
-    this.stack = this.orderOfColors(this.insightsDiscoveryCode);
-    this.stack.splice(this.ring, 0, 'black');
-    this.stack = this.stack.map(color => {
-      const height = color === 'black' ? 10 : 30;
-      const y = this.totalheight;
-      this.totalheight += height;
-      return {y, height, color};
-    });
+  ngOnChanges() {
+    this.error = null;
+    this.totalheight = 0;
+    try {
+      this.stack = this.orderOfColors(this.insightsDiscoveryCode);
+      if (this.stack) {
+        this.stack.splice(this.ring, 0, 'black');
+        this.stack = this.stack.map(color => {
+          const height = color === 'black' ? 10 : 30;
+          const y = this.totalheight;
+          this.totalheight += height;
+          return {y, height, color};
+        });
+      }
+    } catch (e) {
+      this.error = 'Not an insights code';
+    }
   }
 }

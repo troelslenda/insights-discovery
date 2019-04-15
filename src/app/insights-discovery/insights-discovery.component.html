@@ -1,4 +1,5 @@
-<svg viewBox="0 0 130 130" preserveAspectRatio="none">
+<div class="error" *ngIf="error">{{error}}</div>
+<svg viewBox="0 0 130 130" preserveAspectRatio="none" *ngIf="!error">
   <rect
     *ngFor="let item of stack"
     x="0"
